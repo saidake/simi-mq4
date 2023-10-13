@@ -2,7 +2,15 @@
 #define functions_clock
 #include "../definitions/constants.mqh"
 
+void ClearPrevTradingArrows(string & arrowNames[]){
+   int arrowNamesLength=sizeof(arrowNames)/sizeof(arrowNames[0]);
+   for(int i=0; i< arrowNamesLength; i++){
+      ObjectDelete(ChartID(),arrowNames[i]);
+   }
+}
+
 void UpdateActionList(){
+
 //      datetime startTime=StrToTime(trendLine.startTime);
 //      datetime endTime=StrToTime(trendLine.endTime);
 //

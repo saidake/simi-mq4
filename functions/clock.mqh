@@ -9,8 +9,23 @@ void ClearPrevTradingArrows(string & arrowNames[]){
    }
 }
 
-void UpdateActionList(){
 
+void CalculateTradingArrows(string & arrowNames[]){
+   int hLinesLength=sizeof(hLines)/sizeof(hLines[0]);
+   for(int i=0; i< hLinesLength; i++){
+      HLine hLine= hLines[i];
+      LineCore hLineCore=hLine.core;
+      CreateMarkArrowTrading(hLineCore.name + MARK_ARROW_TRADING_BASE_SUFFIX, TimeCurrent(), hLine.price, MARK_ARROW_TRADING_BASE_COLOR);
+      CreateMarkArrowTrading(hLineCore.name + MARK_ARROW_TRADING_ENTRY_SUFFIX, TimeCurrent(), 
+         hLine.price, getMarkArrowEntryColor(hLineCore.action));
+      CreateMarkArrowTrading(hLineCore.name + MARK_ARROW_TRADING_EXIT_SUFFIX, TimeCurrent(), hLine.price, MARK_ARROW_TRADING_EXIT_COLOR);
+
+   }
+   int trendLinesLength=sizeof(trendLines)/sizeof(trendLines[0]);
+   for(int i=0; i< trendLinesLength; i++){
+      TrendLine trendLine= trendLines[i];
+      LineCore trendLineCore=trendLine.core;
+   }
 //      datetime startTime=StrToTime(trendLine.startTime);
 //      datetime endTime=StrToTime(trendLine.endTime);
 //
@@ -28,7 +43,8 @@ void UpdateActionList(){
 //         "priceDiff: ",DoubleToStr(priceDiff*10000,1)
 //         );
 //      double barsSlope = priceDiff/barsNumber;
-//      double currentPriceDiff = currentBarsNumber*barsSlope;
+//      double currentPriceDiff = currentBarsNumber*barsSlope;   
 }
+
 
 #endif

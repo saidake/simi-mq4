@@ -12,6 +12,7 @@ void ClearPrevTradingArrows(string & arrowNames[]){
 
 void CalculateTradingArrows(string & arrowNames[]){
    int hLinesLength=sizeof(hLines)/sizeof(hLines[0]);
+   //Alert("hLinesLength ",hLinesLength);
    for(int i=0; i< hLinesLength; i++){
       HLine hLine= hLines[i];
       LineCore hLineCore=hLine.core;
@@ -25,6 +26,16 @@ void CalculateTradingArrows(string & arrowNames[]){
    for(int i=0; i< trendLinesLength; i++){
       TrendLine trendLine= trendLines[i];
       LineCore trendLineCore=trendLine.core;
+      if(Symbol()!=trendLineCore.symbol)continue; // only draw lines for the specific variety.
+      
+      int barNumbers=Bars(Symbol(), trendLine.timePeriod, trendLine.startTime, trendLine.endTime); // bars number from startTime to endTime.
+      int barTimeInterval=trendLine.timePeriod*barNumbers;
+      double barsTimeIntervalDouble=(double)barTimeInterval;
+      double priceDiff=trendLine.endPrice-trendLine.startPrice;
+      int currentBarNumbers=Bars(Symbol(), trendLine.timePeriod, trendLine.endTime, TimeCurrent());
+      //double intervalSlope = priceDiff/barsTimeIntervalDouble;
+      //double currentPriceDiff = currentBarNumbers*intervalSlope; 
+      
    }
 //      datetime startTime=StrToTime(trendLine.startTime);
 //      datetime endTime=StrToTime(trendLine.endTime);

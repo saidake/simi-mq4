@@ -28,12 +28,22 @@ void CalculateTradingArrows(string & arrowNames[]){
       LineCore trendLineCore=trendLine.core;
       if(Symbol()!=trendLineCore.symbol)continue; // only draw lines for the specific variety.
       
-      int barNumbers=Bars(Symbol(), trendLine.timePeriod, trendLine.startTime, trendLine.endTime); // bars number from startTime to endTime.
-      int barTimeInterval=trendLine.timePeriod*barNumbers;
-      double barsTimeIntervalDouble=(double)barTimeInterval;
+      int currentPeriod=trendLine.timePeriod==0?PERIOD_D1:trendLine.timePeriod;
+      int barNumbers=Bars(Symbol(), currentPeriod, trendLine.startTime, trendLine.endTime); // bars number from startTime to endTime.
+      if(barNumbers==0)ThrowError("trend line bar numbers error: "+barNumbers);
+      //Alert("PERIOD_D1 ",PERIOD_D1);
+      int barHours=24-TimeHour(trendLine.startTime)+TimeHour(trendLine.endTime)
+      int barHours=24-TimeMinute(trendLine.startTime)+TimeMinute(trendLine.endTime)
+      Alert("barHours",barHours);
+      Alert("TimeHour",TimeHour(trendLine.endTime));
+      
+      int barTimeInterval=currentPeriod*barNumbers;
+      double barTimeIntervalDouble=(double)barTimeInterval;
+      
       double priceDiff=trendLine.endPrice-trendLine.startPrice;
-      int currentBarNumbers=Bars(Symbol(), trendLine.timePeriod, trendLine.endTime, TimeCurrent());
-      //double intervalSlope = priceDiff/barsTimeIntervalDouble;
+
+      int currentBarNumbers=Bars(Symbol(), currentPeriod, trendLine.endTime, TimeCurrent());
+      double intervalSlope = priceDiff/barTimeIntervalDouble;
       //double currentPriceDiff = currentBarNumbers*intervalSlope; 
       
    }
